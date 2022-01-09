@@ -8,7 +8,7 @@ stitch.encode = function(fileTable)
         return nil
     else
         local result = {}
-        local curPos = 0
+        local curPos = 1
 
         local header = { "HEAD:" }
         
