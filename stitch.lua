@@ -32,19 +32,18 @@ stitch.decode = function(encodedStr)
         return nil
     else
         local result = {}
-        local headerRemoved = false
-
-        for matchhead in string.gmatch(encodedStr, "[a-zA-Z.]+:%d+:%d+;") do
+        
+        local header = encodedStr:match("HEAD:.+:%d+:%d+;\n?")
+        encodedStr = encodedStr:gsub(header, "")
+        
+        for matchhead in header:gmatch("[a-zA-Z.]+:%d+:%d+;") do
             if matchhead ~= nil then
-                if not headerRemoved then
-                    encodedStr = encodedStr:gsub("HEAD:.+:%d+:%d+;\n?", "")
-                    headerRemoved = true
-                end
-
-                local regionBeggining=matchhead:match(":%d+:"):gsub(":+", "")
-                local regionSize=matchhead:match(":%d+;"):gsub("[:|;]+", "")
+                --funny regex strip()
+                local regionBeggining = matchhead:match(":%d+:"):gsub(":+", "")
+                local regionSize = matchhead:match(":%d+;"):gsub("[:|;]+", "")
 
                 result[matchhead:match("[a-zA-Z.]+")] = encodedStr:sub(regionBeggining, regionBeggining + regionSize)
+            
             else
                 break
             end
