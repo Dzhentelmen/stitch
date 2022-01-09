@@ -11,7 +11,7 @@ stitch.encode = function(fileTable)
     
     for index, file in pairs(fileTable) do
       table.insert(header, string.format('%s:%d:%d;',index,curPos,#file)) -- 3rd argument: size in chars
-      table.insert(result, file) --old: table.insert(result, string.format('%s = %s', index, file))
+      table.insert(result, file) 
       curPos = curPos + file:len()
     end
     
@@ -29,7 +29,7 @@ stitch.decode = function(encodedStr)
     local headerRemoved = false
     local result = {}
 
-    for matchhead in string.gmatch(encodedStr,'[a-zA-Z.]+:%d+:%d+;') do --split(string.match(encodedStr,'([a-zA-Z.]+:\d+:\d+;)'), ';+')
+    for matchhead in string.gmatch(encodedStr,'[a-zA-Z.]+:%d+:%d+;') do
       
       if matchhead ~= nil then
         
